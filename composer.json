@@ -1,10 +1,13 @@
 {
     "name": "blazemedia/leadpack_bridge",
+    "description": "Wordpress Plugin. Makes a bridge between WP and LeadPack service.",
+    "type": "wordpress-plugin",
     "autoload": {
         "psr-4": {
             "LPACK\\": "src/"
         }
     },
+    "license":"MIT",
     "authors": [
         {
             "name": "Blazemedia",
