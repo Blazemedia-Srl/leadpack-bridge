@@ -22,6 +22,9 @@
         "preferred-install": "dist",
         "platform": { 
             "php": "8.0.0"            
+        },
+        "allow-plugins": {
+            "composer/installers": true
         }
     },
     "minimum-stability": "dev",
