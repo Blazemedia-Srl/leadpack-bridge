@@ -38,7 +38,19 @@ class LeadPack {
      */
     public function getUniversities( $filter = [] ) {
         
-        return $this->apiGet( 'university/list', $filter );
+        $result = $this->apiGet( 'university/list', $filter );
+
+        return isset( $result['status'] ) && $result['status'] == 200 ? $result['universities'] : [];
+
+    }
+
+    public function getUniversity( string $slug ) {
+
+        $universities = $this->getUniversities();
+        
+        $slugUniversities = array_filter( $universities, fn( $uni ) => $uni['slug'] == $slug );
+        
+        return empty( $slugUniversities ) ? [] : array_shift( $slugUniversities );
     }
 
 

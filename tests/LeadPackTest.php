@@ -35,5 +35,14 @@ final class LeadPackTest extends TestCase {
         $this->assertTrue( is_array ($courses ), 'courses is array' );
     }
 
+        /** @test */
+    public function can_get_universities_list() {
+    
+        $universities = $this->lp->getUniversity( 'mercatorum' );
+
+        var_dump( $universities); 
+        $this->assertTrue( is_array ( $universities ), 'universities is array' );
+    }
+
 
 }
