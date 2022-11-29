@@ -15,12 +15,16 @@
         }
     ],
     "require": {
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "composer/installers": "^1.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
+    "prefer-stable": true,
     "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
         "platform": { 
             "php": "8.0.0"
             
