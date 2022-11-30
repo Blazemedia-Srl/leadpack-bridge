@@ -32,17 +32,29 @@ final class LeadPackTest extends TestCase {
     
         $courses = $this->lp->getCourses();
 
+        //  print_r( array_map( fn( $course ) => [ $course['slug'], $course['id'] ],  $courses ));
+
         $this->assertTrue( is_array ($courses ), 'courses is array' );
     }
 
-        /** @test */
+    /** @test */
+    public function can_download_single_course_by_Slug() {
+    
+        $course = $this->lp->getCourseBySlug('ingegneria-informatica');
+
+        var_dump($course);
+
+        $this->assertTrue( is_array ( $course ), 'courses is array' );
+    }
+
+    /** @test */
     public function can_get_universities_list() {
     
         $universities = $this->lp->getUniversity( 'mercatorum' );
 
-        var_dump( $universities); 
         $this->assertTrue( is_array ( $universities ), 'universities is array' );
     }
 
+    
 
 }

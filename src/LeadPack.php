@@ -8,6 +8,11 @@ class LeadPack {
 
     private $client;
     
+    /// mantiene in memoria il risultato della chiamata getUniversities
+    private $universities = [];
+    
+    /// mantiene in memoria il risultato della chiamata getCourses
+    private $courses = [];
 
     function __construct( private string $api, private string $apiKey ) {
 
@@ -27,7 +32,44 @@ class LeadPack {
      */
     public function getCourses() {
 
-        return $this->apiGet( 'course/table/list' );
+        if( empty( $this->courses ) ) {
+            
+            $result = $this->apiGet( 'course/table/list' );
+
+            $this->courses = isset( $result['status'] ) && $result['status'] == 200 ? $result['courses'] : [];
+        }
+
+        return $this->courses;
+    }
+
+    /**
+     * Ritorna un array associativo con i dati del singolo corso
+     *
+     * @param string $slug
+     * @return array
+     */
+    public function getCourseBySlug( string $slug ) {
+
+        $courses = $this->getCourses();
+        
+        $slugCourses = array_filter( $courses, fn( $course ) => $course['slug'] == $slug );
+        
+        return empty( $slugCourses ) ? [] : array_shift( $slugCourses );
+    }
+
+    /**
+     * Ritorna un array associativo con i dati del singolo corso
+     *
+     * @param string $slug
+     * @return array
+     */
+    public function getCourseById( int $id ) {
+
+        $courses = $this->getCourses();
+        
+        $slugCourses = array_filter( $courses, fn( $course ) => $course['id'] == $id );
+        
+        return empty( $slugCourses ) ? [] : array_shift( $slugCourses );
     }
 
 
@@ -37,11 +79,15 @@ class LeadPack {
      * @return array
      */
     public function getUniversities( $filter = [] ) {
-        
-        $result = $this->apiGet( 'university/list', $filter );
 
-        return isset( $result['status'] ) && $result['status'] == 200 ? $result['universities'] : [];
+        if( empty( $this->universities ) ) {
 
+            $result = $this->apiGet( 'university/list' );
+
+            $this->universities = isset( $result['status'] ) && $result['status'] == 200 ? $result['universities'] : [];
+        }
+
+        return $this->universities;
     }
 
     public function getUniversity( string $slug ) {
