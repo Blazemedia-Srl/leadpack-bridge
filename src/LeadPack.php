@@ -24,6 +24,20 @@ class LeadPack {
 
     }
 
+    private function arrayKeysMinus2Underscore( $array ) {
+
+        $keys = array_keys( $array );
+
+        return array_reduce( $keys, function ( $newArray, $key ) use ( $array ) {
+
+            $newKey = is_string( $key ) ? str_replace( '-', '_', $key ) : $key;
+
+            $newArray[ $newKey ] = is_array( $array[ $key ] ) ? $this->arrayKeysMinus2Underscore( $array[ $key ] ) : $array[ $key ];
+
+            return $newArray;
+
+        }, []);
+    }
 
     /**
      * Ritorna una array associativo con l'elenco di tutti i corsi
@@ -36,7 +50,10 @@ class LeadPack {
             
             $result = $this->apiGet( 'course/table/list' );
 
-            $this->courses = isset( $result['status'] ) && $result['status'] == 200 ? $result['courses'] : [];
+            $courses = isset( $result['status'] ) && $result['status'] == 200 ? $result['courses'] : [];
+
+            $this->courses = $this->arrayKeysMinus2Underscore( $courses );
+
         }
 
         return $this->courses;
@@ -84,7 +101,9 @@ class LeadPack {
 
             $result = $this->apiGet( 'university/list' );
 
-            $this->universities = isset( $result['status'] ) && $result['status'] == 200 ? $result['universities'] : [];
+            $universities = isset( $result['status'] ) && $result['status'] == 200 ? $result['universities'] : [];
+
+            $this->universities = $this->arrayKeysMinus2Underscore( $universities );
         }
 
         return $this->universities;

@@ -32,7 +32,7 @@ final class LeadPackTest extends TestCase {
     
         $courses = $this->lp->getCourses();
 
-        //  print_r( array_map( fn( $course ) => [ $course['slug'], $course['id'] ],  $courses ));
+        //print_r( array_map( fn( $course ) => [ $course['slug'], $course['id'] ],  $courses ));
 
         $this->assertTrue( is_array ($courses ), 'courses is array' );
     }
