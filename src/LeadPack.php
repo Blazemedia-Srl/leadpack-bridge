@@ -24,6 +24,13 @@ class LeadPack {
 
     }
 
+    /**
+     * Trasforma i caratteri '-' in '_' in modo ricorsivo 
+     * su tutte le chiavi dell'array associativo in ingresso
+     *
+     * @param array $array
+     * @return array
+     */
     private function arrayKeysMinus2Underscore( $array ) {
 
         $keys = array_keys( $array );
@@ -38,6 +45,7 @@ class LeadPack {
 
         }, []);
     }
+    
 
     /**
      * Ritorna una array associativo con l'elenco di tutti i corsi
