@@ -33,5 +33,12 @@
         "psr-4": {
             "LPACK\\": "src/"
         }
+    },
+    "scripts": {        
+        "install-dependencies": [
+            "@composer install"
+        ],
+        "post-package-install": "@install-dependencies",
+        "post-update-cmd":"@install-dependencies"
     }
 }
