@@ -148,6 +148,10 @@ class LeadPack {
         return $this->apiGet( 'degree-class/list', $filter );
     }
 
+    public function getSede( $filter = [] ) {
+
+        return $this->apiGet( 'university-location/list', $filter );
+    }
 
 
    
