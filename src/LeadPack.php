@@ -145,12 +145,18 @@ class LeadPack {
 
     public function getClass( $filter = [] ) {
 
-        return $this->apiGet( 'degree-class/list', $filter );
+        $result = $this->apiGet( 'degree-class/list', $filter );
+        $class = isset( $result['status'] ) && $result['status'] == 200 ? $result['degreeClasses'] : [];
+        return $class;
+        
     }
 
     public function getSede( $filter = [] ) {
 
-        return $this->apiGet( 'university-location/list', $filter );
+        $result = $this->apiGet( 'university-location/list', $filter );
+        $sede = isset( $result['status'] ) && $result['status'] == 200 ? $result['universityLocations'] : [];
+        return $sede;
+
     }
 
 
