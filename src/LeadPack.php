@@ -160,8 +160,6 @@ class LeadPack {
     }
 
 
-   
-
 
     /**
      * ritorna un array associativo con i dati richiesti 
@@ -174,20 +172,31 @@ class LeadPack {
 
         $query = [ 'query' => array_merge( [ 'api_key' => $this->apiKey ], $filter ) ];
 
-        $response = $this->client->get( $api_call, $query );
+        $transient_name = $api_call . implode('',$filter);
 
-        if( empty($response) ) return [];
+        // do_action( 'qm/start', "apiGet:{$api_call}" );
 
-        /// prende la stringa in ingresso
-        $string_data = $response->getBody()->getContents();
+        $data = get_transient( $transient_name );
 
-        if( empty( $string_data ) ) return [];
+        if( $data === false ) {
 
-        $data = json_decode( $string_data, true );
+            $response = $this->client->get( $api_call, $query );     
+
+            if( empty($response) ) return [];
+
+
+            /// prende la stringa in ingresso
+            $string_data = $response->getBody()->getContents();
+
+            if( empty( $string_data ) ) return [];
+
+            $data = json_decode( $string_data, true );
+
+            set_transient( $transient_name, $data, DAY_IN_SECONDS * 10 );
+        }
+
+        // do_action( 'qm/stop', "apiGet:{$api_call}" );
 
         return $data;
     }
-
-
-    
 }
